@@ -65,21 +65,19 @@ prios = {
 
 sum = 0
 
-for line in lines:
-    line = line.strip("\n")
-    index = int(len(line)/2)
+lines = zip(*(iter(lines),) * 3)
 
-    slot1 = line[0:index]
-    slot2 = line[index:]
+for group in list(lines):
+    first = group[0].strip("\n")
+    second = group[1].strip("\n")
+    third = group[2].strip("\n")
 
-    sharedItem = ""
+    common_char = ""
 
-    for item in slot1:
-        if slot2.find(item) != -1:
-            sharedItem = item
+    for char in first:
+        if second.find(char) != -1:
+            if third.find(char) != -1:
+                common_char = char
 
-    priority = prios.get(sharedItem)
-
-    sum += priority
-
+    sum += prios.get(common_char)
 print(sum)
