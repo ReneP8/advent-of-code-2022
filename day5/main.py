@@ -10,9 +10,15 @@ nine = []
 
 lists = [one, two, three, four, five, six, seven, eight, nine]
 
-with open("input.txt", "r") as file:
-    lines = file.readlines()[:8]
-    for line in lines:
+file = open("input.txt", "r")
+
+# reading lines from text file
+lines = file.readlines()
+
+
+def prepare_stacks():
+    picture_of_crates = lines[:8]
+    for line in picture_of_crates:
         one.append(line[1])
         two.append(line[5])
         three.append(line[9])
@@ -25,5 +31,32 @@ with open("input.txt", "r") as file:
 
     for lst in lists:
         lst.reverse()
+        while ' ' in lst:
+            lst.remove(' ')
 
-print(lists)
+    print(lists)
+
+
+def move_crates():
+    for line in lines[10:]:
+        line = line.strip('\n')
+
+        values = line.split(' ')
+        values.remove('move')
+        values.remove('from')
+        values.remove('to')
+
+        for i in range(int(values[0])):
+            removing = lists[int(values[1])-1].pop()
+            lists[int(values[2])-1].append(removing)
+
+    result = ''
+    for list in lists:
+        result += list[-1]
+
+    print(result)
+
+
+if __name__ == '__main__':
+    prepare_stacks()
+    move_crates()
