@@ -34,8 +34,6 @@ def prepare_stacks():
         while ' ' in lst:
             lst.remove(' ')
 
-    print(lists)
-
 
 def move_crates():
     for line in lines[10:]:
@@ -54,9 +52,28 @@ def move_crates():
     for list in lists:
         result += list[-1]
 
+
+def move_crates_2():
+    for line in lines[10:]:
+        line = line.strip('\n')
+
+        values = line.split(' ')
+        values.remove('move')
+        values.remove('from')
+        values.remove('to')
+
+        lst = lists[int(values[1])-1][-int(values[0]):]
+        del lists[int(values[1])-1][-int(values[0]):]
+
+        lists[int(values[2])-1].extend(lst)
+
+    result = ''
+    for list in lists:
+        result += list[-1]
+
     print(result)
 
 
 if __name__ == '__main__':
     prepare_stacks()
-    move_crates()
+    move_crates_2()
